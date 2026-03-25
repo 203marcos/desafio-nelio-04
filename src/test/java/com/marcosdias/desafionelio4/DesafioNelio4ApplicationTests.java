@@ -9,9 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class DesafioNelio4ApplicationTests {
@@ -55,6 +60,23 @@ class DesafioNelio4ApplicationTests {
         assertEquals(12L, result.getContent().get(2).getId());
         assertEquals(21753.0, result.getContent().get(2).getAmount());
         assertEquals("Loki Odinson", result.getContent().get(2).getSellerName());
+    }
+
+    @Test
+    void shouldReturnSalesSummaryFromLastTwelveMonthsWhenDatesAreEmpty() {
+        List<SaleSummaryDTO> result = saleService.searchSalesSummary("", "");
+
+        assertFalse(result.isEmpty());
+    }
+
+    @Test
+    void shouldReturnSalesReportFromLastTwelveMonthsWhenDatesAreEmpty() {
+        Page<SaleReportDTO> result = saleService.searchSalesReport("", "", "", PageRequest.of(0, 20));
+        LocalDate maxDate = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+        LocalDate minDate = maxDate.minusYears(1L);
+
+        assertFalse(result.getContent().isEmpty());
+        assertTrue(result.getContent().stream().allMatch(sale -> !sale.getDate().isBefore(minDate) && !sale.getDate().isAfter(maxDate)));
     }
 
 }

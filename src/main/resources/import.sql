@@ -18,3 +18,8 @@ INSERT INTO tb_sales(seller_id, visited, deals, amount, date) VALUES (5, 0, 0, 7
 INSERT INTO tb_sales(seller_id, visited, deals, amount, date) VALUES (3, 0, 0, 21753.0, '2022-05-06');
 INSERT INTO tb_sales(seller_id, visited, deals, amount, date) VALUES (3, 0, 0, 49368.0, '2022-06-10');
 
+-- Seed dinamico para os cenarios sem parametros (ultimos 12 meses)
+INSERT INTO tb_sales(seller_id, visited, deals, amount, date) VALUES (1, 0, 0, 12000.0, DATEADD('DAY', -15, CURRENT_DATE));
+INSERT INTO tb_sales(seller_id, visited, deals, amount, date) VALUES (3, 0, 0, 18500.0, DATEADD('DAY', -45, CURRENT_DATE));
+INSERT INTO tb_sales(seller_id, visited, deals, amount, date) VALUES (5, 0, 0, 9800.0, DATEADD('DAY', -120, CURRENT_DATE));
+
