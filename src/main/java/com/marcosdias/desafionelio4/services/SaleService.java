@@ -6,6 +6,7 @@ import com.marcosdias.desafionelio4.repositories.SaleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class SaleService {
         this.saleRepository = saleRepository;
     }
 
+    @Transactional(readOnly = true)
     public Page<SaleReportDTO> searchSalesReport(String minDate, String maxDate, String name, Pageable pageable) {
         LocalDate max = parseMaxDate(maxDate);
         LocalDate min = parseMinDate(minDate, max);
@@ -29,6 +31,7 @@ public class SaleService {
         return saleRepository.searchSalesReport(min, max, sellerName, pageable);
     }
 
+    @Transactional(readOnly = true)
     public List<SaleSummaryDTO> searchSalesSummary(String minDate, String maxDate) {
         LocalDate max = parseMaxDate(maxDate);
         LocalDate min = parseMinDate(minDate, max);
