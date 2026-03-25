@@ -59,3 +59,10 @@ Exemplo:
 
 Os testes validam os dois cenarios principais do desafio via camada de servico.
 
+## Fluxo de branches
+
+- `feat/sales-foundation`
+- `feat/sales-report-endpoint`
+- `feat/sales-summary-endpoint`
+- `feat/sales-tests-docs`
+
