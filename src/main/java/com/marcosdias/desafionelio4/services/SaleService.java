@@ -1,6 +1,7 @@
 package com.marcosdias.desafionelio4.services;
 
 import com.marcosdias.desafionelio4.dto.SaleReportDTO;
+import com.marcosdias.desafionelio4.dto.SaleSummaryDTO;
 import com.marcosdias.desafionelio4.repositories.SaleRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 @Service
 public class SaleService {
@@ -25,6 +27,13 @@ public class SaleService {
         String sellerName = name == null ? "" : name;
 
         return saleRepository.searchSalesReport(min, max, sellerName, pageable);
+    }
+
+    public List<SaleSummaryDTO> searchSalesSummary(String minDate, String maxDate) {
+        LocalDate max = parseMaxDate(maxDate);
+        LocalDate min = parseMinDate(minDate, max);
+
+        return saleRepository.searchSalesSummary(min, max);
     }
 
     private LocalDate parseMaxDate(String maxDate) {
