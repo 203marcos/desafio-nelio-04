@@ -24,6 +24,7 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
             FROM Sale s
             WHERE s.date BETWEEN :minDate AND :maxDate
             AND UPPER(s.seller.name) LIKE UPPER(CONCAT('%', :name, '%'))
+            ORDER BY s.date DESC
             """)
     Page<SaleReportDTO> searchSalesReport(
             @Param("minDate") LocalDate minDate,
